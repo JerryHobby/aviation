@@ -17,13 +17,15 @@ export default async function Home() {
     return (
         <main>
             <Title title={title} icon={icon}/>
-            <Flex align='start'>
+            <Flex align='start'  className="flex-wrap">
+                <Flex className="flex-wrap max-w-xl">
                 {(data) && data['Home 1']
                     && <ShowMarkdown item={data['Home 1']}/>}
-                <Image
-                    src="/images/jerry_hobby_headshot.png"
-                    alt="Jerry Hobby" width={200} height={20}
-                    className="align-top object-contain h-50 w-200 border mx-16 p-3 rounded-box "/>
+                    </Flex>
+                    <Image
+                        src="/images/aviator.jpg"
+                        alt="Jerry Hobby flying a plane" width={300} height={20}
+                        className="align-top object-contain h-50 w-300 border mx-16 p-3 rounded-box "/>
             </Flex>
         </main>
     )
