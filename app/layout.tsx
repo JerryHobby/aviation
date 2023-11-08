@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: 'JerryHobby.com - Jerry Hobby',
-    description: 'Personal website for Jerry Hobby.',
+    title: 'Aviation.JerryHobby.com',
+    description: 'Jerry\'s Aviation',
 };
 
 export default function RootLayout({
