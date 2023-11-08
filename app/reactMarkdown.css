@@ -38,13 +38,13 @@
 }
 
 .reactMarkDown ul {
-    margin-top: 1em;
+    margin-top: 0;
     margin-bottom: 1em;
     list-style: disc outside none;
 }
 
 .reactMarkDown ul li {
-    margin-top: 1em;
+    margin-top: 0;
     margin-left: 2em;
     display: list-item;
     text-align: -webkit-match-parent;
