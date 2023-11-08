@@ -109,7 +109,7 @@ const Page = async ({params: {search}}: Props) => {
 
     // @ts-ignore
     return (
-        <>
+        <main>
             <Title title={title} icon={icon}/>
 
             <div className='flex justify-between'>
@@ -153,7 +153,7 @@ const Page = async ({params: {search}}: Props) => {
                     ))}
                 </Table.Body>
             </Table.Root>
-        </>
+        </main>
     );
 };
 
