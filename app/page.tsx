@@ -9,7 +9,7 @@ import 'app/components/YouTubeEmbed.css'
 
 export default async function Home() {
 
-    const title = "Jerry Hobby's Aviation Tools"
+    const title = "Jerry's Aviation"
     const icon = "home"
     const pagePrefix = "home"
     const data = await usePages(pagePrefix);
