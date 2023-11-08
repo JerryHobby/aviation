@@ -6,7 +6,7 @@ import ShowMarkdown from "@/app/components/ShowMarkdown";
 
 const Page = async () => {
     const title = "Search Airports"
-    const icon = "airplane"
+    const icon = "airports"
     const pagePrefix = "airports";
     const data = await usePages(pagePrefix);
 
