@@ -1,5 +1,5 @@
 #!/bin/zsh
-TARGETDIR=/tmp/airport_data
+TARGETDIR=/tmp/aviation_data
 mkdir -p $TARGETDIR
 
 URL=https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/
@@ -16,6 +16,6 @@ for (( i = 1; i <= $#INFILES; i++ )) do
         echo "#############################################"
         curl $URL"${INFILES[i]}" > "$RAW"
         sed -e 's/,,/,\\N,/g' -e 's/,,/,\\N,/g' -e 's/,$/,\\N/g' "$RAW" > "$CSV"
-        mysqlimport --user=jerryhobby --host='jerryhobby.com' --password='wjb7ETJ*dzr2jeu2wuf' jerryhobby "$CSV" --delete --force --verbose --ignore-lines=1 --fields-terminated-by=',' --fields-enclosed-by='"' --lines-terminated-by='\n'
+        mysqlimport --user=aviation --host='jerryhobby.com' --password='GtePUOVNkIIy4GM' aviation "$CSV" --delete --force --verbose --ignore-lines=1 --fields-terminated-by=',' --fields-enclosed-by='"' --lines-terminated-by='\n'
     )
 done

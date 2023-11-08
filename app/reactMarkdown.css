@@ -1,0 +1,61 @@
+.reactMarkDown {
+    xfont-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    xfont-size: 14px;
+    line-height: 1.6em;
+    xcolor: #333;
+    xpadding: 0.5em;
+    xmargin: 0.5em;
+}
+
+.reactMarkDown pre code {
+    display: block;
+    background: ghostwhite;
+    -webkit-overflow-scrolling: touch;
+    max-width: 500px;
+    min-width: 200px;
+    overflow: auto;
+    padding: 1em;
+    border: 1px solid #999;
+    border-radius: 6px;
+    margin: 30px;
+
+    wrap-option: wrap;
+    white-space: pre-wrap;
+}
+
+.reactMarkDown h1 {
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+}
+
+.reactMarkDown h2 {
+    padding-top: 0;
+    padding-bottom: 0rem;
+}
+
+.reactMarkDown h3 {
+    padding-top: 0;
+    padding-bottom: 0rem;
+}
+
+.reactMarkDown p {
+    padding-bottom: 1rem;
+}
+
+.reactMarkDown ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    list-style: disc outside none;
+}
+
+.reactMarkDown ul li {
+    margin-left: 2em;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.reactMarkDown a {
+    color: dodgerblue;
+    font-weight: bold;
+}
+

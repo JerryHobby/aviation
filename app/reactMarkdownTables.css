@@ -1,0 +1,19 @@
+
+.reactMarkDown mdtable, td {
+    background: whitesmoke;
+    border: 1px solid grey;
+    border-radius: 6px;
+    padding: 0.5em;
+    text-align: -webkit-match-parent;
+}
+
+.reactMarkDown mdtable, th {
+    border-radius: 6px;
+    padding: 0.5em 0 1.5em 0;
+    text-align: -webkit-match-parent;
+}
+
+.reactMarkDown a {
+    color: dodgerblue;
+    font-weight: bold;
+}
