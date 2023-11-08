@@ -11,7 +11,7 @@ const Page = async () => {
     const data = await usePages(pagePrefix);
 
     return (
-        <>
+        <main>
             <Title title={title} icon={icon}/>
 
             <div className='flex justify-between'>
@@ -24,7 +24,7 @@ const Page = async () => {
                     <SearchForm/>
                 </div>
             </div>
-        </>
+        </main>
     );
 };
 
