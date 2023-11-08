@@ -36,7 +36,7 @@ const SearchForm = ({search}:Props) => {
             {/* errors will return when field validation fails  */}
             {errors.exampleRequired && <span>This field is required</span>}
 
-            <button className='bg-blue-700 text-white' type="submit">Search</button>
+            <button className='btn bg-blue-700 text-white' type="submit">Search</button>
         </form>
     );
 };
