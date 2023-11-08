@@ -5,7 +5,7 @@ import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 
 const Page = async () => {
-    const title = "Airports Search Tool"
+    const title = "Search Airports"
     const icon = "airplane"
     const pagePrefix = "airports";
     const data = await usePages(pagePrefix);
