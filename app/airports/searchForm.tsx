@@ -32,11 +32,11 @@ const SearchForm = ({search}:Props) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* include validation with required or other standard HTML validation rules */}
-            <input defaultValue={find} className='bg-white p-0.5 mr-3 border border-gray-500 fill-accent rounded border-accent-focus' {...register("search", { required: true })} />
+            <input defaultValue={find} className='text-sm bg-white p-0.5 mr-3 border border-gray-500 fill-accent rounded border-accent-focus' {...register("search", { required: true })} />
             {/* errors will return when field validation fails  */}
             {errors.exampleRequired && <span>This field is required</span>}
 
-            <button className='py-1 px-3 rounded bg-blue-700 text-white' type="submit">Search</button>
+            <button className='py-1 px-3 text-sm rounded bg-blue-700 text-white' type="submit">Search</button>
         </form>
     );
 };
