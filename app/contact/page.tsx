@@ -32,3 +32,4 @@ const Contact = async () => {
 };
 
 export default Contact;
+export const dynamic="force-dynamic";
