@@ -19,6 +19,15 @@ const Page = async () => {
         ]
     });
 
+    if(!airlines) {
+        return (
+            <main>
+            <Title title={title} icon={icon}/>
+            <div>Something went wrong. Try again later.</div>
+        </main>
+        )
+    }
+
     return (
         <main>
             <Title title={title} icon={icon}/>
@@ -38,7 +47,7 @@ const Page = async () => {
                             <div className="font-semibold">
                                 {airline.website &&
                                     <a className='text-blue-500' target='_blank'
-                                       href={airline.website!}>[www] </a>}
+                                       href={airline.website}>[www] </a>}
                                 {airline.phone && airline.phone}
                             </div>
                             <div className="pt-2">Hubs: {airline.hubs}</div>
