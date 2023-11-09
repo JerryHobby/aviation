@@ -230,3 +230,13 @@ model Runways {
   he_heading_degT           Int?
   he_displaced_threshold_ft Int?
 }
+
+model Airline {
+  id           Int     @id @default(autoincrement())
+  name         String
+  iataCode     String? @map("iata_code")
+  headquarters String?
+  hubs         String?
+
+  @@map("Airlines")
+}

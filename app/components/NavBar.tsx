@@ -33,8 +33,9 @@ const NavBar = () => {
         <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
             <NavigationMenu.List className={navBarClassName}>
                 {basicNavItem("Home", "/")}
+                {basicNavItem("Airlines", "/airlines")}
                 {basicNavItem("Airports", "/airports")}
-                {basicNavItem("Hubs", "/hubs")}
+                {basicNavItem("US Hubs", "/hubs")}
                 {basicNavItem("Contact", "/contact")}
 
 
