@@ -3,7 +3,7 @@ import {Title} from "@/app/components";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import prisma from "@/prisma/client";
-import { Table } from '@radix-ui/themes';
+import {Table} from '@radix-ui/themes';
 
 const Page = async () => {
     const title = "Major Global Airlines"
@@ -31,11 +31,17 @@ const Page = async () => {
                 {airlines.map((airline) => (
                     <Table.Row key={airline.id}>
                         <Table.Cell className='font-bold whitespace-nowrap'>
-                            {airline.name} ({airline.iataCode})
+                            <div className="font-semibold text-md">{airline.name} ({airline.iataCode})</div>
                         </Table.Cell>
                         <Table.Cell>
                             <div className="font-semibold">{airline.headquarters}</div>
-                            <span className="font-semibold">Hubs:</span> {airline.hubs}
+                            <div className="font-semibold">
+                                {airline.website &&
+                                    <a className='text-blue-500' target='_blank'
+                                       href={airline.website!}>[www] </a>}
+                                {airline.phone && airline.phone}
+                            </div>
+                            <div className="pt-2">Hubs: {airline.hubs}</div>
                         </Table.Cell>
                     </Table.Row>
                 ))}
@@ -45,4 +51,4 @@ const Page = async () => {
 };
 
 export default Page;
-export const dynamic="force-dynamic";
+export const dynamic = "force-dynamic";
