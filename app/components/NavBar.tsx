@@ -1,7 +1,5 @@
 'use client'
 import React from 'react';
-
-import Image from "next/image";
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import classNames from 'classnames';
 import {CaretDownIcon} from '@radix-ui/react-icons';
@@ -36,6 +34,7 @@ const NavBar = () => {
             <NavigationMenu.List className={navBarClassName}>
                 {basicNavItem("Home", "/")}
                 {basicNavItem("Airports", "/airports")}
+                {basicNavItem("Hubs", "/hubs")}
                 {basicNavItem("Contact", "/contact")}
 
 

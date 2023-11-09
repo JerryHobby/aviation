@@ -4,6 +4,8 @@ import {Table} from "@radix-ui/themes";
 import {Title} from "@/app/components";
 import SearchForm from "@/app/airports/searchForm";
 import {forEach} from "lodash";
+import usePages from "@/app/models/UsePages";
+import ShowMarkdown from "@/app/components/ShowMarkdown";
 
 interface Props {
     params: {
@@ -15,25 +17,21 @@ interface AirportColors {
     [index: string]: string;
 }
 
-var airportColor = {} as AirportColors;
-
-airportColor['large_airport'] = 'text-blue-500 text-lg';
-airportColor['medium_airport'] = 'text-green-500 text-md';
-airportColor['small_airport'] = 'text-yellow-500 text-sm';
-airportColor['closed'] = 'text-red-500 text-sm';
-airportColor['heliport'] = 'text-purple-500 text-sm';
-airportColor['seaplane_base'] = 'text-pink-500 text-sm';
-airportColor['balloonport'] = 'text-indigo-500 text-sm';
+const airportColor: AirportColors = {
+    'large_airport': 'text-blue-500 text-lg',
+    'medium_airport': 'text-green-500 text-md',
+    'small_airport': 'text-yellow-500 text-sm',
+    'closed': 'text-red-500 text-sm',
+    'heliport': 'text-purple-500 text-sm',
+    'seaplane_base': 'text-pink-500 text-sm',
+    'balloonport': 'text-indigo-500 text-sm',
+};
 
 const Page = async ({params: {search}}: Props) => {
     const title = "Airports"
     const icon = "airports"
-
-
-    // const result1 = await this.prisma.course.findMany({
-    //   where: { enrollmentCourse: { some: { userId: user.id } } },
-    //   include: { enrollmentCourse: true }
-    // });
+    const pagePrefix = "AirportSearch";
+    const data = await usePages(pagePrefix);
 
     const find = decodeURIComponent(search);
     const airports = await prisma.airports.findMany({
@@ -69,7 +67,7 @@ const Page = async ({params: {search}}: Props) => {
     });
 
 
-    function score(airport: any) {
+    function calculateScore(airport: any) {
         // weighted score --
         let score = 0;
 
@@ -96,7 +94,7 @@ const Page = async ({params: {search}}: Props) => {
         });
 
         if (score && airport.type === 'large_airport') {
-            score += 400;
+            score = 400;
         } else if (score && airport.type === 'medium_airport') {
             score += 200;
         }
@@ -104,21 +102,31 @@ const Page = async ({params: {search}}: Props) => {
     }
 
     airports.sort((a, b) => {
-        return score(b) - score(a);
+        const scoreA = calculateScore(a);
+        const scoreB = calculateScore(b);
+
+        if (scoreB < scoreA) {
+            return -1;
+        } else if (scoreB > scoreA) {
+            return 1;
+        }
+
+        return a.iata_code! < b.iata_code! ? -1 : a.iata_code! > b.iata_code! ? 1 : 0;
     });
 
-    // @ts-ignore
     return (
         <main>
             <Title title={title} icon={icon}/>
 
             <div className='flex justify-between'>
-                <h1 className='text-2xl font-bold'>{title}</h1>
-                <div className='flex items-center'>
-                    <SearchForm search={search}/>
+                <div>
+                    {(data) && data['AirportSearch 1']
+                        && <ShowMarkdown item={data['AirportSearch 1']}/>}
+                </div>
+                <div className='flex  whitespace-nowrap pl-5'>
+                    <SearchForm/>
                 </div>
             </div>
-
             <Table.Root className=' border rounded mt-3 mb-10 max-w-full'>
                 <Table.Header className='bg-gray-100'>
                     <Table.Row>
@@ -128,18 +136,16 @@ const Page = async ({params: {search}}: Props) => {
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {airports.map((airport) => (
+                    {airports.slice(0, 10).map((airport) => (
                         <Table.Row key={airport.id}>
                             <Table.Cell>
-                                {airport.wikipedia_link
-                                    && <a className='underline' href={airport.wikipedia_link} target='_blank'
-                                          rel='noreferrer'>
-                                        <div className={`font-bold ${airportColor[airport.type!]} `}>
-                                            {airport.iata_code}</div>
+                                {airport.wikipedia_link ? (
+                                    <a className='underline' href={airport.wikipedia_link} target='_blank' rel='noreferrer'>
+                                        <div className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
                                     </a>
-                                    || <div className={`font-bold ${airportColor[airport.type!]} `}>
-                                        {airport.iata_code}</div>
-                                }
+                                ) : (
+                                    <div className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
+                                )}
                             </Table.Cell>
                             <Table.Cell>
                                 <div className='font-bold '>{airport.name}</div>

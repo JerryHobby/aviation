@@ -4,8 +4,6 @@ import ShowMarkdown from "@/app/components/ShowMarkdown";
 import usePages from "@/app/models/UsePages";
 import {Flex} from "@radix-ui/themes";
 import Image from "next/image";
-import 'app/components/YouTubeEmbed.css'
-
 
 export default async function Home() {
 
