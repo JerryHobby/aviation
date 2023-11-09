@@ -34,7 +34,10 @@ const NavBar = () => {
             <NavigationMenu.List className={navBarClassName}>
                 {basicNavItem("Home", "/")}
                 {basicNavItem("Airlines", "/airlines")}
-                {basicNavItem("Airports", "/airports")}
+
+                {/*the - forces the search page to load*/}
+                {basicNavItem("Airports", "/airports/-")}
+
                 {basicNavItem("US Hubs", "/hubs")}
                 {basicNavItem("Contact", "/contact")}
 
