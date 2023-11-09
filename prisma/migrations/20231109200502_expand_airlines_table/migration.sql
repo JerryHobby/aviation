@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `Airlines` ADD COLUMN `country` VARCHAR(191) NULL,
+    ADD COLUMN `logo` VARCHAR(191) NULL,
+    ADD COLUMN `phone` VARCHAR(191) NULL,
+    ADD COLUMN `website` VARCHAR(191) NULL;

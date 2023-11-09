@@ -237,6 +237,10 @@ model Airline {
   iataCode     String? @map("iata_code")
   headquarters String?
   hubs         String?
+  country      String?
+  logo         String?
+  website      String?
+  phone        String?
 
   @@map("Airlines")
 }
