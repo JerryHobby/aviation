@@ -1,9 +1,10 @@
 import React from 'react';
+import Image from "next/image";
 import Title from "@/app/components/Title";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import {Page} from ".prisma/client";
-import {Card} from "@radix-ui/themes";
+import FlexibleFrame from "@/app/components/FlexibleFrame";
 
 const Contact = async () => {
 
@@ -18,15 +19,19 @@ const Contact = async () => {
         return ( <ShowMarkdown item={content}/>);
     }
 
-    const cardStyle = 'prose w-96 mt-5 p-5 bg-gray-100 rounded-md'
-
     return (
         <main>
             <Title title={title} icon={icon}/>
+            <div className='flex flex-col sm:flex-row gap-5 justify-center'>
+                    <FlexibleFrame className='border shadow rounded flex flex-col sm:flex-row gap-5 justify-center bg-gray-50'>
+                    <Image
+                        src="/images/jerry_hobby_headshot.png"
+                        alt="Jerry Hobby" width={150} height={100}
+                        className="align-top object-contain h-150 w-250 rounded-box "/>
 
-            <Card className={cardStyle}>
-                {data && getCard(data['Contact 1'])}
-            </Card>
+                    {data && getCard(data['Contact 1'])}
+                    </FlexibleFrame>
+                </div>
         </main>
     )
 };

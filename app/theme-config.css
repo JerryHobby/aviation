@@ -1,3 +1,17 @@
 .radix-themes {
     --default-font-family: 'Inter', sans-serif;
+    --background-custom: cc, ee, cc;
+
+    accent-color: blueviolet;
+    background-color: ghostwhite;
+}
+
+.radix-themes main {
+    color: darkslategrey;
+    margin: 1rem 0rem 2rem 0rem;
+    padding: 1rem 1rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: lavender 0px 0px 10px 0px;
+    border: lavender 1px solid;
 }
