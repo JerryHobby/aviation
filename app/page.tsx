@@ -14,7 +14,7 @@ export default async function Home() {
 
     return (
         <main>
-            <Title title={title} icon={icon}/>
+            <Image className='rounded-lg w-full object-contain mb-20 shadow-xl' src='/images/globebanner.png' alt='global banner' width={1000} height={200}  />
             <Flex align='start'  className="flex-wrap">
                 <Flex className="flex-wrap max-w-xl">
                 {(data) && data['Home 1']
