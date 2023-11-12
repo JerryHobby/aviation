@@ -1,8 +1,8 @@
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google';
+import './globals.css'
 import '@radix-ui/themes/styles.css';
 import './theme-config.css'
-import './globals.css'
 import './reactMarkdown.css';
 import {Container, Theme} from '@radix-ui/themes';
 import {Footer, NavBar} from "@/app/components";

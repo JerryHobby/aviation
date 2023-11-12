@@ -12,6 +12,7 @@
     padding: 1em;
     border: 1px solid #999;
     border-radius: 6px;
+    box-shadow: lavender 2px 2px 4px 0;
     margin: 30px;
 
     wrap-option: wrap;
