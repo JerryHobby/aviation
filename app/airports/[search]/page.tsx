@@ -6,7 +6,6 @@ import SearchForm from "@/app/airports/searchForm";
 import {forEach} from "lodash";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
-import continentColor from "@/app/models/useContinentColors";
 
 interface Props {
     params: {

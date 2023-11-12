@@ -1,10 +1,8 @@
 import React from 'react';
-import {Title} from "@/app/components";
+import {ShowMarkdown, Title} from "@/app/components";
 import usePages from "@/app/models/UsePages";
-import ShowMarkdown from "@/app/components/ShowMarkdown";
 import prisma from "@/prisma/client";
 import {Table} from '@radix-ui/themes';
-import continentColor from "@/app/models/useContinentColors";
 
 const Page = async () => {
     const title = "Major Global Airlines"
@@ -46,7 +44,7 @@ const Page = async () => {
                             <div className="font-semibold text-md">{airline.name} ({airline.iataCode})</div>
                         </Table.Cell>
                         <Table.Cell>
-                            <div className="font-semibold">{airline.headquarters}</div>
+                            <div className="font-semibold whitespace-nowrap">{airline.headquarters}</div>
                             <div className="font-semibold">
                                 {airline.website &&
                                     <a className='text-blue-500' target='_blank'

@@ -5,3 +5,5 @@ export {default as Spinner} from "./Spinner";
 export {default as Title} from "./Title";
 export {default as Footer} from "./Footer";
 export {default as NavBar} from "./NavBar";
+export {default as ContinentBadge} from "./ContinentBadge";
+export {default as ShowMarkdown} from "./ShowMarkdown";
