@@ -3,6 +3,7 @@ import {ShowMarkdown, Title} from "@/app/components";
 import usePages from "@/app/models/UsePages";
 import prisma from "@/prisma/client";
 import {Table} from '@radix-ui/themes';
+import Image from "next/image";
 
 const Page = async () => {
     const title = "Major Global Airlines"
@@ -35,13 +36,21 @@ const Page = async () => {
                     && <ShowMarkdown item={data['Airlines 1']}/>}
             </div>
 
-            <Table.Root className='border mb-10'>
+            <Table.Root className='border rounded shadow  mb-10'>
                 {airlines.map((airline) => (
                     <Table.Row key={airline.id}
                                // className={continentColor[airline!.continent!]}
                     >
-                        <Table.Cell className='font-bold whitespace-nowrap'>
-                            <div className="font-semibold text-md">{airline.name} ({airline.iataCode})</div>
+                        <Table.Cell className='font-bold w-[250px]'>
+                            {airline.logo
+                                ? <div>
+                                    <Image className='float-left mr-3' src={'/images/airlines/' + airline.logo} alt={airline.name} width={150} height={50} />
+                                    <div className="font-semibold text-md">({airline.iataCode})</div>
+                                </div>
+                                : <div className="font-semibold text-md">
+                                    {airline.name} ({airline.iataCode})
+                                </div>
+                            }
                         </Table.Cell>
                         <Table.Cell>
                             <div className="font-semibold whitespace-nowrap">{airline.headquarters}</div>
