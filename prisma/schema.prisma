@@ -238,6 +238,7 @@ model Airline {
   headquarters String?
   hubs         String?
   country      String?
+  continent    String?
   logo         String?
   website      String?
   phone        String?

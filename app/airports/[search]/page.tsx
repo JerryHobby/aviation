@@ -6,6 +6,7 @@ import SearchForm from "@/app/airports/searchForm";
 import {forEach} from "lodash";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
+import continentColor from "@/app/models/useContinentColors";
 
 interface Props {
     params: {
@@ -137,7 +138,7 @@ const Page = async ({params: {search}}: Props) => {
                 </Table.Header>
                 <Table.Body>
                     {airports.slice(0, 10).map((airport) => (
-                        <Table.Row key={airport.id}>
+                        <Table.Row key={airport.id} >
                             <Table.Cell>
                                 {airport.wikipedia_link ? (
                                     <a className='underline' href={airport.wikipedia_link} target='_blank' rel='noreferrer'>

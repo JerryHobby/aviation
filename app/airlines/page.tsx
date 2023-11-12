@@ -4,6 +4,7 @@ import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import prisma from "@/prisma/client";
 import {Table} from '@radix-ui/themes';
+import continentColor from "@/app/models/useContinentColors";
 
 const Page = async () => {
     const title = "Major Global Airlines"
@@ -38,7 +39,9 @@ const Page = async () => {
 
             <Table.Root className='border mb-10'>
                 {airlines.map((airline) => (
-                    <Table.Row key={airline.id}>
+                    <Table.Row key={airline.id}
+                               // className={continentColor[airline!.continent!]}
+                    >
                         <Table.Cell className='font-bold whitespace-nowrap'>
                             <div className="font-semibold text-md">{airline.name} ({airline.iataCode})</div>
                         </Table.Cell>
