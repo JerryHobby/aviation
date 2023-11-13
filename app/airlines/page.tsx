@@ -42,7 +42,6 @@ const Page = async () => {
                                // className={continentColor[airline!.continent!]}
                     >
                         <Table.Cell className='font-bold w-[250px]'>
-
                             {airline.logo
                                 ? <div>
                                     { airline.website
@@ -63,6 +62,7 @@ const Page = async () => {
                             }
                         </Table.Cell>
                         <Table.Cell>
+                            <div className="font-semibold whitespace-nowrap">{airline.name}</div>
                             <div className="font-semibold whitespace-nowrap">{airline.headquarters}</div>
                             <div className="font-semibold">
                                 {airline.website &&
