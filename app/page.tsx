@@ -1,4 +1,3 @@
-import Title from "@/app/components/Title";
 import React from "react";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import usePages from "@/app/models/UsePages";
@@ -7,8 +6,8 @@ import Image from "next/image";
 
 export default async function Home() {
 
-    const title = "Jerry's Aviation"
-    const icon = "home"
+    //const title = "Jerry's Aviation"
+    //const icon = "home"
     const pagePrefix = "home"
     const data = await usePages(pagePrefix);
 

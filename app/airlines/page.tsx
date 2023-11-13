@@ -42,9 +42,19 @@ const Page = async () => {
                                // className={continentColor[airline!.continent!]}
                     >
                         <Table.Cell className='font-bold w-[250px]'>
+
                             {airline.logo
                                 ? <div>
-                                    <Image className='float-left mr-3 w-[150px] h-auto' src={'/images/airlines/' + airline.logo} alt={airline.name} width={150} height={50} />
+                                    { airline.website
+                                        && <a className='text-blue-500' target='_blank' href={airline.website}>
+                                            <Image className='float-left mr-3 w-[150px] h-auto'
+                                                   src={'/images/airlines/' + airline.logo}
+                                                   alt={airline.name} width={150} height={50} />
+                                        </a>
+                                        || <Image className='float-left mr-3 w-[150px] h-auto'
+                                                  src={'/images/airlines/' + airline.logo}
+                                                  alt={airline.name} width={150} height={50} />
+                                    }
                                     <div className="font-semibold text-md">({airline.iataCode})</div>
                                 </div>
                                 : <div className="font-semibold text-md">
