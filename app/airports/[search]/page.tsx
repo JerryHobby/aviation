@@ -36,8 +36,8 @@ const Page = async ({params: {search}}: Props) => {
     const find = decodeURIComponent(search);
     const airports = await prisma.airports.findMany({
         include: {
-            region: {select: {name: true}},
-            country: {select: {name: true}},
+            Regions: {select: {name: true}},
+            Countries: {select: {name: true}},
         },
         where: {
             type: {
@@ -53,8 +53,8 @@ const Page = async ({params: {search}}: Props) => {
                     {iso_country: {contains: find}},
                     {ident: {contains: find}},
                     {keywords: {contains: find}},
-                    {region: {name: {contains: find}}},
-                    {country: {name: {contains: find}}},
+                    {Regions: {name: {contains: find}}},
+                    {Countries: {name: {contains: find}}},
                 ]
             }
         },
@@ -152,8 +152,8 @@ const Page = async ({params: {search}}: Props) => {
                                 <div className='textarea-xs p-0 m-0 '>{airport.keywords}</div>
                             </Table.Cell>
                             <Table.Cell>
-                                <div>{airport.municipality + ", " + airport.region?.name}</div>
-                                <div className='textarea-xs p-0 m-0 '>{airport.country.name}</div>
+                                <div>{airport.municipality + ", " + airport.Regions?.name}</div>
+                                <div className='textarea-xs p-0 m-0 '>{airport.Countries.name}</div>
                             </Table.Cell>
                         </Table.Row>
                     ))}

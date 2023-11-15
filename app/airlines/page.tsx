@@ -11,7 +11,7 @@ const Page = async () => {
     const pagePrefix = "airlines";
     const data = await usePages(pagePrefix);
 
-    const airlines = await prisma.airline.findMany({
+    const airlines = await prisma.airlines.findMany({
         orderBy: [
             {
                 name: 'asc'
@@ -54,10 +54,10 @@ const Page = async () => {
                                                   src={'/images/airlines/' + airline.logo}
                                                   alt={airline.name} width={150} height={50} />
                                     }
-                                    <div className="font-semibold text-md">({airline.iataCode})</div>
+                                    <div className="font-semibold text-md">({airline.iata_code})</div>
                                 </div>
                                 : <div className="font-semibold text-md">
-                                    {airline.name} ({airline.iataCode})
+                                    {airline.name} ({airline.iata_code})
                                 </div>
                             }
                         </Table.Cell>

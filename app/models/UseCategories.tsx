@@ -2,10 +2,10 @@ import prisma from "@/prisma/client";
 
 const UseCategories = async () => {
 
-    const categories = await prisma.category.findMany(
+    return  prisma.category.findMany(
         {
             include: {
-                articles: true
+                Article: true
             },
             orderBy: {
                 name: 'asc'
@@ -13,7 +13,6 @@ const UseCategories = async () => {
         }
     );
 
-    return categories
 };
 
 export default UseCategories;
