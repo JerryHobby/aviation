@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
 
 datasource db {
@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id
   userId            String
   type              String
   provider          String
@@ -21,111 +21,23 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId], map: "Account_userId_fkey")
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId], map: "Session_userId_fkey")
-}
-
-model User {
-  id             String    @id @default(cuid())
-  name           String?
-  email          String?   @unique
-  company        String?
-  emailVerified  DateTime?
-  hashedPassword String?
-  image          String?
-  accounts       Account[]
-  articles       Article[]
-  comments       Comment[]
-  likes          Like[]
-  sessions       Session[]
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Article {
-  id              Int       @id @default(autoincrement())
-  date            DateTime  @default(now())
-  title           String    @unique
-  summary         String    @db.Text
-  text            String    @db.MediumText
-  userId          String
-  categoryId      Int
-  image           String?
-  tags            String?
-  commentsEnabled Boolean   @default(true)
-  category        Category  @relation(fields: [categoryId], references: [id])
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  comments        Comment[]
-  likes           Like[]
-
-  @@index([categoryId], map: "Article_categoryId_fkey")
-  @@index([userId], map: "Article_userId_fkey")
-}
-
-model Category {
-  id       Int       @id @default(autoincrement())
-  parentId Int?
-  name     String    @unique
-  articles Article[]
-}
-
-model Comment {
-  id        Int      @id @default(autoincrement())
-  date      DateTime @default(now())
-  text      String   @db.Text
-  userId    String
-  articleId Int
-  article   Article  @relation(fields: [articleId], references: [id])
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([articleId], map: "Comment_articleId_fkey")
-  @@index([userId], map: "Comment_userId_fkey")
-}
-
-model Like {
-  id        Int     @id @default(autoincrement())
-  userId    String
-  articleId Int
-  article   Article @relation(fields: [articleId], references: [id])
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([articleId], map: "Like_articleId_fkey")
-  @@index([userId], map: "Like_userId_fkey")
-}
-
-model Page {
-  id    Int      @id @default(autoincrement())
-  date  DateTime @default(now())
-  title String   @unique
-  text  String   @db.Text
-}
-
-model Project {
-  id           Int      @id @default(autoincrement())
-  date         DateTime @default(now())
-  title        String   @unique
-  text         String   @db.Text
-  tools        String
-  url          String
-  thumbnailUrl String
+model Airlines {
+  id           Int     @id @default(autoincrement())
+  name         String
+  iata_code    String?
+  headquarters String?
+  hubs         String?
+  country      String?
+  logo         String?
+  phone        String?
+  website      String?
+  continent    String?
 }
 
 model Airports {
@@ -147,11 +59,51 @@ model Airports {
   home_link         String?
   wikipedia_link    String?
   keywords          String?   @db.VarChar(1000)
-  country           Countries @relation(fields: [iso_country], references: [code])
-  region            Regions?  @relation(fields: [iso_region], references: [code])
+  Countries         Countries @relation(fields: [iso_country], references: [code])
+  Regions           Regions?  @relation(fields: [iso_region], references: [code])
 
   @@index([iso_country], map: "Airports_iso_country_fkey")
   @@index([iso_region], map: "Airports_iso_region_fkey")
+}
+
+model Article {
+  id              Int       @id @default(autoincrement())
+  date            DateTime  @default(now())
+  title           String    @unique
+  summary         String    @db.Text
+  text            String    @db.MediumText
+  userId          String
+  categoryId      Int
+  image           String?
+  tags            String?
+  commentsEnabled Boolean   @default(true)
+  Category        Category  @relation(fields: [categoryId], references: [id])
+  User            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Comment         Comment[]
+  Like            Like[]
+
+  @@index([categoryId], map: "Article_categoryId_fkey")
+  @@index([userId], map: "Article_userId_fkey")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  parentId Int?
+  name     String    @unique
+  Article  Article[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now())
+  text      String   @db.Text
+  userId    String
+  articleId Int
+  Article   Article  @relation(fields: [articleId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([articleId], map: "Comment_articleId_fkey")
+  @@index([userId], map: "Comment_userId_fkey")
 }
 
 model Countries {
@@ -164,18 +116,6 @@ model Countries {
   Airports       Airports[]
 }
 
-model Regions {
-  id             Int        @id @default(autoincrement())
-  code           String     @unique
-  local_code     String?
-  name           String
-  continent      String
-  iso_country    String
-  wikipedia_link String?
-  keywords       String?
-  Airports       Airports[]
-}
-
 model Frequencies {
   id            Int     @id @default(autoincrement())
   airport_ref   Int?
@@ -183,6 +123,17 @@ model Frequencies {
   type          String?
   description   String?
   frequency_mhz Float?
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  userId    String
+  articleId Int
+  Article   Article @relation(fields: [articleId], references: [id])
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([articleId], map: "Like_articleId_fkey")
+  @@index([userId], map: "Like_userId_fkey")
 }
 
 model Navaids {
@@ -208,6 +159,35 @@ model Navaids {
   associated_airport     String?
 }
 
+model Page {
+  id    Int      @id @default(autoincrement())
+  date  DateTime @default(now())
+  title String   @unique
+  text  String   @db.Text
+}
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  date         DateTime @default(now())
+  title        String   @unique
+  text         String   @db.Text
+  tools        String
+  url          String
+  thumbnailUrl String
+}
+
+model Regions {
+  id             Int        @id @default(autoincrement())
+  code           String     @unique
+  local_code     String?
+  name           String
+  continent      String
+  iso_country    String
+  wikipedia_link String?
+  keywords       String?
+  Airports       Airports[]
+}
+
 model Runways {
   id                        Int     @id @default(autoincrement())
   airport_ref               Int?
@@ -231,17 +211,45 @@ model Runways {
   he_displaced_threshold_ft Int?
 }
 
-model Airline {
-  id           Int     @id @default(autoincrement())
-  name         String
-  iataCode     String? @map("iata_code")
-  headquarters String?
-  hubs         String?
-  country      String?
-  continent    String?
-  logo         String?
-  website      String?
-  phone        String?
+model Session {
+  id           String   @id
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("Airlines")
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model Timezone {
+  id          Int       @id @default(autoincrement())
+  aaa         String    @unique
+  timezone    String?
+  offset      Int?
+  is_dst      Boolean?
+  dst_savings Int?
+  last_update DateTime?
+}
+
+model User {
+  id             String    @id
+  name           String?
+  email          String?   @unique
+  company        String?
+  emailVerified  DateTime?
+  hashedPassword String?
+  image          String?
+  Account        Account[]
+  Article        Article[]
+  Comment        Comment[]
+  Like           Like[]
+  Session        Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
