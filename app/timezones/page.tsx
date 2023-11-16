@@ -13,7 +13,6 @@ const Page = async () => {
 
     const aaa = ['IAH', 'SFO', 'LAX', 'JFK', 'ORD', 'DFW', 'SNA', 'DXB', 'HNL'];
     const timezones = await UseTimezones(aaa);
-    console.log(timezones);
 
     return (
         <main>
