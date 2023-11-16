@@ -35,6 +35,33 @@ const Page = async ({params: {search}}: Props) => {
     const data = await usePages(pagePrefix);
 
     const find = decodeURIComponent(search);
+    var searchParams = [
+        {name: {contains: find}},
+        {municipality: {contains: find}},
+        {iata_code: {contains: find}},
+        {local_code: {contains: find}},
+        {iso_country: {contains: find}},
+        {ident: {contains: find}},
+        {keywords: {contains: find}},
+        {Regions: {name: {contains: find}}},
+        {Countries: {name: {contains: find}}},
+    ]
+
+    // default results - all United hubs
+    if(find.length === 1) {
+        searchParams = [
+            {iata_code: {contains: 'DEN'}},
+            {iata_code: {contains: 'LAX'}},
+            {iata_code: {contains: 'ORD'}},
+            {iata_code: {contains: 'SFO'}},
+            {iata_code: {contains: 'IAH'}},
+            {iata_code: {contains: 'EWR'}},
+            {iata_code: {contains: 'IAD'}},
+            {iata_code: {contains: 'GUM'}},
+            {iata_code: {contains: 'NRT'}},
+            ]
+    }
+
     let airports = await prisma.airports.findMany({
         include: {
             Regions: {select: {name: true}},
@@ -46,17 +73,7 @@ const Page = async ({params: {search}}: Props) => {
             },
             iata_code: {not: null},
             AND: {
-                OR: [
-                    {name: {contains: find}},
-                    {municipality: {contains: find}},
-                    {iata_code: {contains: find}},
-                    {local_code: {contains: find}},
-                    {iso_country: {contains: find}},
-                    {ident: {contains: find}},
-                    {keywords: {contains: find}},
-                    {Regions: {name: {contains: find}}},
-                    {Countries: {name: {contains: find}}},
-                ]
+                OR: searchParams
             }
         },
 
