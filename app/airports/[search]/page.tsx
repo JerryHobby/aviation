@@ -6,6 +6,7 @@ import SearchForm from "@/app/airports/searchForm";
 import {forEach} from "lodash";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
+import UseTimezones from "@/app/models/useTimezones";
 
 interface Props {
     params: {
@@ -34,7 +35,7 @@ const Page = async ({params: {search}}: Props) => {
     const data = await usePages(pagePrefix);
 
     const find = decodeURIComponent(search);
-    const airports = await prisma.airports.findMany({
+    let airports = await prisma.airports.findMany({
         include: {
             Regions: {select: {name: true}},
             Countries: {select: {name: true}},
@@ -76,7 +77,7 @@ const Page = async ({params: {search}}: Props) => {
                 forEach(field, (subfield: any) => {
                     if (subfield && typeof subfield === 'string') {
                         if (subfield.toUpperCase() === find.toUpperCase()) {
-                            score += 100;
+                            score += 200;
                         } else if (subfield.toUpperCase().includes(find.toUpperCase())) {
                             score += 10;
                         }
@@ -114,6 +115,12 @@ const Page = async ({params: {search}}: Props) => {
         return a.iata_code! < b.iata_code! ? -1 : a.iata_code! > b.iata_code! ? 1 : 0;
     });
 
+    // reduce results
+    airports = airports.slice(0, 10);
+
+    const aaa = airports.map((airport) => airport.iata_code!);
+    const timezones = await UseTimezones(aaa);
+
     return (
         <main>
             <Title title={title} icon={icon}/>
@@ -136,15 +143,18 @@ const Page = async ({params: {search}}: Props) => {
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {airports.slice(0, 10).map((airport) => (
-                        <Table.Row key={airport.id} >
+                    {airports.map((airport) => (
+                        <Table.Row key={airport.id}>
                             <Table.Cell>
                                 {airport.wikipedia_link ? (
-                                    <a className='underline' href={airport.wikipedia_link} target='_blank' rel='noreferrer'>
-                                        <div className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
+                                    <a className='underline' href={airport.wikipedia_link} target='_blank'
+                                       rel='noreferrer'>
+                                        <div
+                                            className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
                                     </a>
                                 ) : (
-                                    <div className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
+                                    <div
+                                        className={`font-bold ${airportColor[airport.type!]}`}>{airport.iata_code}</div>
                                 )}
                             </Table.Cell>
                             <Table.Cell>
@@ -152,8 +162,23 @@ const Page = async ({params: {search}}: Props) => {
                                 <div className='textarea-xs p-0 m-0 '>{airport.keywords}</div>
                             </Table.Cell>
                             <Table.Cell>
-                                <div>{airport.municipality + ", " + airport.Regions?.name}</div>
-                                <div className='textarea-xs p-0 m-0 '>{airport.Countries.name}</div>
+                                <div className='font-semibold'>{airport.municipality
+                                    + ", " + airport.Regions?.name
+                                    + ", " + airport.Countries.name}
+                                </div>
+                                {timezones && timezones.map((timezone) => {
+                                        if (timezone.aaa === airport.iata_code) {
+                                            return (
+                                                <div key={timezone.aaa}>
+                                                    <div>Zone: {timezone.timezone}</div>
+                                                    <div>Time: {timezone.current_date} - {timezone.current_time}</div>
+                                                </div>
+                                            )
+                                        }
+                                    }
+                                )}
+
+
                             </Table.Cell>
                         </Table.Row>
                     ))}
