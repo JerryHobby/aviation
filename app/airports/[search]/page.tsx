@@ -188,7 +188,7 @@ const Page = async ({params: {search}}: Props) => {
                                             return (
                                                 <div key={timezone.aaa}>
                                                     <div>Zone: {timezone.timezone}</div>
-                                                    <div>Time: {timezone.current_date} - {timezone.current_time}</div>
+                                                    <div>Time:<span className='font-semibold text-blue-500'> {timezone.current_date} - {timezone.current_time}</span></div>
                                                 </div>
                                             )
                                         }
