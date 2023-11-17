@@ -2,29 +2,40 @@ import {Title} from "@/app/components";
 import UseTimezones from "@/app/models/useTimezones";
 import React from "react";
 import {Flex} from "@radix-ui/themes";
+import Clock from "@/app/clocks/clock";
+import SearchForm from "@/app/clocks/searchForm";
 
-const Page = async () => {
+interface Props {
+    search?: string;
+
+}
+
+const Page = async ({search}:Props) => {
+
     const title = "Timezone Finder";
     const icon = "timezone";
     const pagePrefix = "timezone";
 
     // todo - add search form to search for timezones
     // collect a list of aaa to build the timezone list
+    var aaa;
+    if(search)
+        aaa = search.split(' ');
+    else
+        aaa = ['IAH', 'SFO', 'LAX'];
 
-    const aaa = ['IAH', 'SFO', 'LAX', 'JFK', 'ORD', 'DFW', 'SNA', 'DXB', 'HNL'];
     const timezones = await UseTimezones(aaa);
 
     return (
-        <main>
+        <main className='w-full'>
+            <SearchForm/>
             <Title title={title} icon={icon}/>
             {
-                <Flex align='start' className="flex-wrap gap-2">
+                <Flex className="flex-wrap gap-10 items-end">
                     {timezones && timezones.map((timezone) => {
                         return (
-                            <div key={timezone.aaa} className="w-1/4 border rounded">
-                                <h2>{timezone.aaa}</h2>
-                                <p>timezone: {timezone.timezone}</p>
-                                <p>{timezone.current_date} - {timezone.current_time}</p>
+                            <div key={timezone.aaa} className="flex justify-center">
+                                <Clock location={timezone.aaa} timezone={timezone.timezone}/>
                             </div>
                         )
                     })}

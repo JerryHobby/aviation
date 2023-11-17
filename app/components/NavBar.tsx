@@ -37,6 +37,7 @@ const NavBar = () => {
 
                 {/*the - forces the search page to load*/}
                 {basicNavItem("Airports", "/airports/-")}
+                {basicNavItem("Clocks", "/clocks/NRT%20SFO%20EWR%20LHR")}
 
                 {basicNavItem("US Hubs", "/hubs")}
                 {basicNavItem("Contact", "/contact")}
