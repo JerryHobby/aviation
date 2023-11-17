@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 
 const LeafletMap = dynamic(() => import('@/app/components/LeafletMap'), { ssr: false })
 
+// todo - implement regional maps with nearby airports - range 300 miles?
 
 const center: [number, number] = [48.2082, 16.3738]
 const markers: [number, number][] = [center, [48.2, 16.37], [48.1987, 16.3685]]

@@ -10,6 +10,10 @@ const Page = async () => {
     const pagePrefix = "airports";
     const data = await usePages(pagePrefix);
 
+    // this page is not really used - it is a placeholder for the search form
+    // if someone goes to /airports they will see the search form
+    // navbar links to /airports/search
+
     return (
         <main>
             <Title title={title} icon={icon}/>
