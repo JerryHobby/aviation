@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ZLSSettings">
+    <option name="zlsPath" value="$USER_HOME$/dev/zls/zig-out/bin/zls" />
+    <option name="initialAutodetectHasBeenDone" value="true" />
+  </component>
+  <component name="ZigProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/dev/zig-macos-aarch64-0.12.0-dev.1626+0c6cb8d8c" />
+    <option name="explicitPathToStd" value="Users/jerry/dev/zig-macos-aarch64-0.12.0-dev.1626+0c6cb8d8c/lib/std" />
+  </component>
+</project>

@@ -20,13 +20,19 @@ const Page = async  ({params: {search}}: Props)  => {
     var find = decodeURIComponent(search);
     // todo - add search form to search for timezones
     // collect a list of aaa to build the timezone list
-    var aaa;
+    var aaa: string[];
+
     if(find)
         aaa = find.split(' ');
     else
         aaa = ['IAH', 'SFO', 'LAX'];
 
     const timezones = await UseTimezones(aaa);
+
+    if(timezones)
+        timezones.sort((a, b) => {
+            return aaa.indexOf(a.aaa) - aaa.indexOf(b.aaa);
+        });
 
     return (
         <main className='w-full'>

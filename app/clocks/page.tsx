@@ -5,12 +5,7 @@ import {Flex} from "@radix-ui/themes";
 import Clock from "@/app/clocks/clock";
 import SearchForm from "@/app/clocks/searchForm";
 
-interface Props {
-    search?: string;
-
-}
-
-const Page = async ({search}:Props) => {
+const Page = async () => {
 
     const title = "Timezone Finder";
     const icon = "timezone";
@@ -19,10 +14,8 @@ const Page = async ({search}:Props) => {
     // todo - add search form to search for timezones
     // collect a list of aaa to build the timezone list
     var aaa;
-    if(search)
-        aaa = search.split(' ');
-    else
-        aaa = ['IAH', 'SFO', 'LAX'];
+
+    aaa = ['IAH', 'SFO', 'LAX'];
 
     const timezones = await UseTimezones(aaa);
 
