@@ -1,6 +1,5 @@
 'use client'
 import React, {useState} from 'react';
-import {Card} from "@radix-ui/themes";
 
 interface Props {
     location: string,

@@ -13,7 +13,7 @@ interface Props {
 
 const Page = async  ({params: {search}}: Props)  => {
 
-    const title = "Timezone Finder";
+    const title = "World Clocks";
     const icon = "timezone";
     const pagePrefix = "timezone";
 
@@ -22,13 +22,14 @@ const Page = async  ({params: {search}}: Props)  => {
     // collect a list of aaa to build the timezone list
     var aaa: string[];
 
-    if(find)
+    if(find) {
+        find = find.toUpperCase();
         aaa = find.split(' ');
+    }
     else
         aaa = ['IAH', 'SFO', 'LAX'];
 
     const timezones = await UseTimezones(aaa);
-
     if(timezones)
         timezones.sort((a, b) => {
             return aaa.indexOf(a.aaa) - aaa.indexOf(b.aaa);
@@ -36,8 +37,10 @@ const Page = async  ({params: {search}}: Props)  => {
 
     return (
         <main className='w-full'>
-            <SearchForm/>
             <Title title={title} icon={icon}/>
+            <div className='flex justify-end whitespace-nowrap pb-5'>
+            <SearchForm search={find}/>
+                </div>
             {
                 <Flex className="flex-wrap gap-10 items-end">
                     {timezones && timezones.map((timezone) => {

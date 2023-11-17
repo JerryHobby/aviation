@@ -66,8 +66,7 @@ const UseTimezones = async (aaa: string[]) => {
 
     let timezones;
     const now = new Date();
-    let staleDate = new Date();
-    staleDate.setDate(staleDate.getDate() - 1); // 24 hours ago
+    let staleDate = calculateStaleDate();
 
     if (response.length > 0) {
         // first look in cache - saves time
@@ -179,7 +178,7 @@ const UseTimezones = async (aaa: string[]) => {
                         offset: timezone.data.timezone_offset,
                         is_dst: timezone.data.is_dst,
                         dst_savings: timezone.data.dst_savings,
-                        last_update: timezone.data.last_update,
+                        last_update: new Date(),
                     }
                 })
             }
@@ -204,5 +203,21 @@ const UseTimezones = async (aaa: string[]) => {
     }
 }
 
+function calculateStaleDate() {
+    let staleDate = new Date();
+
+    // when was last DST change?
+    // stale is anything before that date
+    // different countries change on different dates
+
+    // all changes seem to occur in March and November
+    // but not all countries change in March and November
+    // some change in sep, oct, nov
+    // some change in mar, apr, may
+
+
+    staleDate.setDate(staleDate.getDate() - 1); // 24 hours ago
+    return staleDate;
+}
 
 export default UseTimezones;
