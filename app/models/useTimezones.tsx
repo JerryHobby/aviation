@@ -190,6 +190,7 @@ async function getTimezoneData(aaa: string, lng?: number, lat?: number, loopInde
 
     if (!response || response.status !== 200) {
         console.log('API error getting timezone data');
+        console.log(response.statusText)
         return undefined;
     }
 
