@@ -1,93 +1,100 @@
 import prisma from "@/prisma/client";
-import Axios from "axios";
+import Axios, {AxiosResponse} from "axios";
+import {Airports, Timezone} from "@prisma/client";
 
-// {
-//     "timezone": "America/Los_Angeles",
-//     "timezone_offset": -8,
-//     "date": "2018-12-06",
-//     "date_time": "2018-12-06 02:02:09",
-//     "date_time_txt": "Thursday, December 06, 2018 02:02:09",
-//     "date_time_wti": "Thu, 06 Dec 2018 02:02:09 -0800",
-//     "date_time_ymd": "2018-12-06T02:02:09-0800",
-//     "date_time_unix": 1544090529.989,
-//     "time_24": "02:02:09",
-//     "time_12": "02:02:09 AM",
-//     "week": "49",
-//     "month": "12",
-//     "year": "2018",
-//     "year_abbr": "18",
-//     "is_dst": false,
-//     "dst_savings": 1
-// }
+// when using the Abstract API, the response is:
+interface AbstractTimezone {
+    "datetime": string,                 // "2023-11-18 00:26:31",
+    "timezone_name": string,            // "Greenwich Mean Time",
+    "timezone_location": string,        // "Europe/London",
+    "timezone_abbreviation": string,    // "GMT",
+    "gmt_offset": number,               // 0,
+    "is_dst": boolean,                  // false,
+    "requested_location": string,       // "Oxford, United Kingdom",
+    "latitude": string,                 // 51.7520131,
+    "longitude": string,                // -1.2578499
+}
 
-// keepers:
-// timezone: string,
-// timezone_offset: number,
-// timezone_is_dst: bool,
-// timezone_dst_savings: number,
-// timezone_last_update: date
+// when using the ipgeolocation.io API, the response is:
+interface IpGeoTimezone {
+    "timezone": string,         // "America/Los_Angeles",
+    "timezone_offset": number,  // -8,
+    "date": string,             // "2018-12-06",
+    "date_time": string,        // "2018-12-06 02:02:09",
+    "date_time_txt": string,    // "Thursday, December 06, 2018 02:02:09",
+    "date_time_wti": string,    // "Thu, 06 Dec 2018 02:02:09 -0800",
+    "date_time_ymd": string,    // "2018-12-06T02:02:09-0800",
+    "date_time_unix": number,   // 1544090529.989,
+    "time_24": string,          // "02:02:09",
+    "time_12": string,          // "02:02:09 AM",
+    "week": string,             // "49",
+    "month": string,            // "12",
+    "year": string,             // "2018",
+    "year_abbr": string,        // "18",
+    "is_dst": boolean,          // false,
+    "dst_savings": number,      // 1
+}
 
-export interface aaaTimezone {
+// combined airport and timezone data - returned
+export interface AirportTimezone {
     aaa: string,
     timezone?: string,
     timezone_offset?: number,
     timezone_is_dst?: boolean,
-    timezone_dst_savings?: number,
-    longitude?: number,
-    latitude?: number,
     current_time?: string,
     current_date?: string,
+    latitude?: number,
+    longitude?: number,
 }
 
 const UseTimezones = async (aaa: string[]) => {
 
-    const response: aaaTimezone[] = [];
+    const airportTimezones: AirportTimezone[] = [];
 
     if (aaa.length === 0) {// fail - invalid location
-        return response
+        return airportTimezones
     }
 
-    const airports = await prisma.airports.findMany({
+    const airports: Airports[] = await prisma.airports.findMany({
         where: {iata_code: {in: aaa}}
     });
 
     if (airports.length === 0) {// fail - invalid location
-        return response
+        return airportTimezones
     }
 
     // load response array with all airports found in table
     airports.map((airport) => {
-        response.push({
-            aaa: airport.iata_code!,
-            latitude: airport.latitude_deg!,
-            longitude: airport.longitude_deg!
+        airportTimezones.push({
+            aaa: airport.iata_code!,  // create first element of response array
+            latitude: airport.latitude_deg || undefined,
+            longitude: airport.longitude_deg || undefined,
         })
     });
 
-    let timezones;
+    let timezones: Timezone[] = [];
     const now = new Date();
     let staleDate = calculateStaleDate();
 
-    if (response.length > 0) {
+    if (airportTimezones.length > 0) {
         // first look in cache - saves time
         timezones = await prisma.timezone.findMany(
             {
                 where: {
-                    aaa: {in: response.map((airport) => airport.aaa)},
+                    aaa: {in: airportTimezones.map((airport) => airport.aaa)},
                     last_update: {gte: staleDate}
                 }
             });
 
-        // add timezone data to response from cache
+        // add timezone data to airportTimezones from cache
         timezones.map((timezone) => {
-            const index = response.findIndex((airport) => airport.aaa === timezone.aaa);
+            const index = airportTimezones.findIndex((airport) => airport.aaa === timezone.aaa);
             if (index >= 0) {
-                response[index].timezone = timezone.timezone!;
-                response[index].timezone_offset = timezone.offset!;
-                response[index].timezone_is_dst = timezone.is_dst!;
-                response[index].timezone_dst_savings = timezone.dst_savings!;
-                response[index].current_time = now.toLocaleTimeString('en-US', {timeZone: timezone.timezone!})
-                response[index].current_date = now.toLocaleDateString('en-US', {timeZone: timezone.timezone!})
+                airportTimezones[index].timezone = timezone.timezone!;
+                airportTimezones[index].timezone_offset = timezone.offset!;
+                airportTimezones[index].timezone_is_dst = timezone.is_dst!;
+                airportTimezones[index].current_time = now.toLocaleTimeString('en-US', {timeZone: timezone.timezone!})
+                airportTimezones[index].current_date = now.toLocaleDateString('en-US', {timeZone: timezone.timezone!})
             }
         });
 
@@ -95,28 +102,23 @@ const UseTimezones = async (aaa: string[]) => {
         // all cached timezones in response
 
         // is anything missing?
-
-        // ...
-
-// is anything missing?
-        const missing = response.filter((airport) => !airport.timezone);
+        const missing = airportTimezones.filter((airport) => !airport.timezone);
 
         if (missing.length > 0) {
+            var loopIndex = 0;
             // Fetch timezone data for all missing airports
             const timezonePromises = missing.map(async (airport) => {
-                const timezone = await getTimezoneData(airport.aaa, airport.longitude, airport.latitude);
+                const timezone = await getTimezoneData(airport.aaa, airport.longitude, airport.latitude, loopIndex++);
 
                 // Update response with new timezone data
                 if (timezone) {
-                    const index = response.findIndex((item) => item.aaa === airport.aaa);
+                    const index = airportTimezones.findIndex((item) => item.aaa === airport.aaa);
                     if (index >= 0) {
-                        response[index].timezone = timezone.data.timezone;
-                        response[index].timezone_offset = timezone.data.timezone_offset;
-                        response[index].timezone_is_dst = timezone.data.is_dst;
-                        response[index].timezone_dst_savings = timezone.data.dst_savings;
-                        response[index].current_time = now.toLocaleTimeString('en-US', {timeZone: timezone.data.timezone!})
-                        response[index].current_date = now.toLocaleDateString('en-US', {timeZone: timezone.data.timezone!})
-
+                        airportTimezones[index].timezone = timezone.timezone;
+                        airportTimezones[index].timezone_offset = timezone.timezone_offset;
+                        airportTimezones[index].timezone_is_dst = timezone.timezone_is_dst;
+                        airportTimezones[index].current_time = now.toLocaleTimeString('en-US', {timeZone: timezone.timezone!})
+                        airportTimezones[index].current_date = now.toLocaleDateString('en-US', {timeZone: timezone.timezone!})
                     }
                 }
             });
@@ -125,86 +127,159 @@ const UseTimezones = async (aaa: string[]) => {
             await Promise.all(timezonePromises);
         }
 
-        return response;
-    }
-
-    async function getTimezoneData(aaa: string, lng?: number, lat?: number) {
-
-        let findStr;
-        let timezone;
-
-        if (lng && lat) {
-            findStr = `&lat=${lat}&long=${lng}`;
-        } else {
-            return undefined;
-        }
-
-        let url =
-            `https://api.ipgeolocation.io/timezone?apiKey=${process.env.IP_GEOLOCATION_API_KEY}${findStr}`;
-        try {
-            timezone = await Axios({
-                method: 'get',
-                url: url
-            });
-        } catch (e) {
-            return undefined;
-        }
-
-        // try to save it to the timezone table
-        aaa && timezone && await updateTimezoneTable(aaa, timezone);
-
-        return timezone;
-    }
-
-
-    async function updateTimezoneTable(aaa: string, timezone: any) {
-
-        // query to see if it already exists
-        // if it does, update it
-        // if it doesn't, create it
-
-        let record;
-
-        try {
-            record = await prisma.timezone.findFirst({
-                where: {aaa: aaa}
-            });
-
-            if (record) {
-                record = await prisma.timezone.update({
-                    where: {aaa: aaa},
-                    data: {
-                        timezone: timezone.data.timezone,
-                        offset: timezone.data.timezone_offset,
-                        is_dst: timezone.data.is_dst,
-                        dst_savings: timezone.data.dst_savings,
-                        last_update: new Date(),
-                    }
-                })
-            }
-
-            if (!record) {
-                record = await prisma.timezone.create({
-                    data: {
-                        aaa: aaa.toUpperCase(),
-                        timezone: timezone.data.timezone,
-                        offset: timezone.data.timezone_offset,
-                        is_dst: timezone.data.is_dst,
-                        dst_savings: timezone.data.dst_savings,
-                        last_update: new Date()
-                    }
-                })
-            }
-        } catch (e) {
-            console.log(e)
-            return undefined;
-        }
-        return record;
+        return airportTimezones;
     }
 }
 
+async function getTimezoneData(aaa: string, lng?: number, lat?: number, loopIndex?: number) {
+
+    let findStr: string;
+    let timezone: AirportTimezone;
+    let response = {} as AxiosResponse<IpGeoTimezone | AbstractTimezone>;
+    let ipGeoData: IpGeoTimezone = {} as IpGeoTimezone;
+    let abstractData: AbstractTimezone = {} as AbstractTimezone;
+
+    // use ipgeolocation.io to get timezone data
+    // or use abstract api - map the fields to the airportTimezones
+
+    const useIpGeo = (process.env.TIMEZONE_API === 'ipgeolocation');
+    const useAbstract = !useIpGeo;
+    let url: string;
+
+    if (useIpGeo) {
+        if (lng && lat) {
+            findStr = `&lat=${lat}&long=${lng}`;
+        } else {
+            findStr = `&location=${aaa}`;
+        }
+        url = `https://api.ipgeolocation.io/timezone?apiKey=${process.env.IP_GEOLOCATION_API_KEY}${findStr}`;
+    }
+
+
+    if (useAbstract) {
+
+        findStr = '&location=' + aaa;
+        if (lng && lat) {
+            findStr = `${lat},${lng}`;
+        } else {
+            findStr = `&location=${aaa}`;
+        }
+        url = `https://timezone.abstractapi.com/v1/current_time/?api_key=${process.env.ABSTRACT_API_KEY}&location=${findStr}`;
+    }
+
+    // throttle to 1 request per  1.5 second
+    // loopIndex multiplies to space out all queries
+    // only necessary when using the abstract api
+
+    const delay = (useAbstract ? 1500 * (loopIndex ? loopIndex : 0)! : 0);
+
+    await new Promise(resolve => setTimeout(resolve, delay ))
+        .then(async () => {
+            try {
+                //console.log(loopIndex, '-> running after ', delay/1000, ' seconds');
+                response = await Axios({
+                    method: 'get',
+                    url: url,
+                });
+            } catch (e) {
+                return undefined;
+            }
+        });
+
+    ////////////////
+
+    if (!response || response.status !== 200) {
+        console.log('API error getting timezone data');
+        return undefined;
+    }
+
+    if (useIpGeo) {
+        ipGeoData = response.data as IpGeoTimezone;
+    } else {
+        abstractData = response.data as AbstractTimezone;
+    }
+
+    // map the response fields to the airportTimezones
+    if (useIpGeo && ipGeoData) {
+        timezone = {
+            aaa: aaa,
+            timezone: ipGeoData.timezone,
+            timezone_offset: ipGeoData.timezone_offset,
+            timezone_is_dst: ipGeoData.is_dst,
+            current_time: ipGeoData.date_time,
+            current_date: ipGeoData.date,
+            latitude: lat,
+            longitude: lng,
+        };
+    } else if (useAbstract && abstractData) {
+        const recDate = new Date();// "datetime": "2023-11-18 00:26:31"
+        const time = recDate.toLocaleTimeString('en-US', {timeZone: abstractData.timezone_location});
+        const date = recDate.toLocaleDateString('en-US', {timeZone: abstractData.timezone_location});
+
+        timezone = {
+            aaa: aaa,
+            timezone: abstractData.timezone_location,
+            timezone_offset: abstractData.gmt_offset,
+            timezone_is_dst: abstractData.is_dst,
+            current_time: time,
+            current_date: date,
+            latitude: lat,
+            longitude: lng,
+        };
+    }
+
+    // try to save it to the timezone table
+    if (aaa && timezone!) {
+        await updateTimezoneTable(aaa, timezone);
+    }
+
+    return timezone!;
+}
+
+
+async function updateTimezoneTable(aaa: string, timezone: any) {
+    // query to see if it already exists
+    // if it does, update it
+    // if it doesn't, create it
+
+    let record;
+
+    try {
+        const data = {
+            aaa: aaa.toUpperCase(),
+            timezone: timezone.timezone,
+            offset: timezone.timezone_offset,
+            is_dst: timezone.timezone_is_dst,
+            last_update: new Date()
+        }
+
+        record = await prisma.timezone.findFirst({
+            where: {aaa: aaa}
+        });
+
+        if (record) {
+            record = await prisma.timezone.update({
+                where: {aaa: aaa},
+                data: data
+            })
+        } else {
+            record = await prisma.timezone.create({
+                data: data
+            })
+        }
+
+    } catch (e) {
+        console.log(e)
+        return undefined;
+    }
+    return record;
+}
+
+
 function calculateStaleDate() {
     let staleDate = new Date();
+
+    // LOGIC to calculate stale date
 
     // when was last DST change?
     // stale is anything before that date
@@ -214,7 +289,6 @@ function calculateStaleDate() {
     // but not all countries change in March and November
     // some change in sep, oct, nov
     // some change in mar, apr, may
-
 
     staleDate.setDate(staleDate.getDate() - 1); // 24 hours ago
     return staleDate;
