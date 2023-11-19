@@ -29,7 +29,7 @@ const AirportSkeleton = async () => {
                 </div>
             </div>
 
-            <Skeleton count={5} className="flex-wrap mx-10 my-10 text-center" borderRadius='100%' inline={true}  width={200} height={200}/>
+            <Skeleton count={4} className="flex-wrap mx-8 my-10 text-center" borderRadius='100%' inline={true}  width={200} height={200}/>
 
         </main>
     );
