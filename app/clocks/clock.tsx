@@ -21,13 +21,14 @@ const Clock = ({location, timezone}:Props) => {
     });
 
     return (
-        <div className='py-5 drop-shadow-md whitespace-nowrap bg-sky-100 w-[200px] border border-blue-700 rounded-2xl'>
-            <div className='text-center border border-b-blue-700 mb-5 px-5'>
-                <h1 className='justify-center'>{location}</h1>
+        <div className=' bg-gradient-to-br from-cyan-600 to-blue-800 align-middle py-5 shadow-lg shadow-gray-400 shadow-inner-xl drop-shadow-blue-500 whitespace-nowrap border-1 w-[200px] h-[200px] border border-indigo-700 rounded-full'>
+            <div className='text-center pt-2'>
+                <h1 className='text-3xl text-cyan-300 justify-center'>{location}</h1>
             </div>
             <div className='text-center'>
-                <h3>{currentDate}</h3>
-                <h2 className='mt-3 text-blue-500'>{currentTime}</h2>
+                <h1 className='text-3xl text-white py-1.5 font-bold'>{currentTime}</h1>
+                <p className='text-cyan-300 text-lg font-semibold'>{currentDate}</p>
+
             </div>
 
         </div>

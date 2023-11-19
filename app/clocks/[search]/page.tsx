@@ -42,10 +42,10 @@ const Page = async  ({params: {search}}: Props)  => {
             <SearchForm search={find}/>
                 </div>
             {
-                <Flex className="flex-wrap gap-10 items-end">
+                <Flex className="my-5 flex-wrap gap-x-24 gap-y-10 text-center">
                     {timezones && timezones.map((timezone) => {
                         return (
-                            <div key={timezone.aaa} className="flex justify-center">
+                            <div key={timezone.aaa} className="">
                                 <Clock location={timezone.aaa} timezone={timezone.timezone}/>
                             </div>
                         )
