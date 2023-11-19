@@ -1,5 +1,5 @@
 #!/bin/zsh
-
+git restore package-lock.json
 git pull
 npm i
 npm update
