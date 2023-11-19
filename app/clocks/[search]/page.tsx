@@ -15,7 +15,7 @@ const Page = async  ({params: {search}}: Props)  => {
 
     const title = "World Clocks";
     const icon = "timezone";
-    const pagePrefix = "timezone";
+    const pagePrefix = "clocks";
 
     var find = decodeURIComponent(search);
     // todo - add search form to search for timezones
