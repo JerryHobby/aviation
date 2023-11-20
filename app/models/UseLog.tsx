@@ -17,8 +17,8 @@ interface Props {
 
 export async function PutLog({level, message, component}: Props) {
 
-    const response = await Axios.get('http://localhost:3000/api/ssr');
-    //const response = await Axios.get('https://api.ipify.org?format=json');
+    //const response = await Axios.get('http://localhost:3000/api/ssr');
+    const response = await Axios.get('https://api.ipify.org?format=json');
     let ip:string = response.data.ip;
     let userAgent:string = response.data.userAgent;
 
