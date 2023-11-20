@@ -10,9 +10,9 @@ export function GET(req: NextRequest, res: NextResponse) {
     console.log('ip: ', ip)
 
     const forwardedFor = req.headers.get('x-forwarded-for') as string
-    // if(!ip && forwardedFor){
-    //     ip = forwardedFor?.split(",").at(0) ?? "Unknown";
-    // }
+    if(!ip && forwardedFor){
+        ip = forwardedFor?.split(",").at(0) ?? "Unknown";
+    }
 
     if(!ip) ip = 'Unknown'
     if(!userAgent) userAgent = 'Unknown'
