@@ -14,6 +14,7 @@ const center: [number, number] = [48.2082, 16.3738]
 const markers: [number, number][] = [center, [48.2, 16.37], [48.1987, 16.3685]]
 
 import { icon } from 'leaflet'
+import {Marker} from "react-leaflet";
 
 // Marker.prototype.options.icon = icon({
 //     iconUrl: '/static/leaflet/map-marker.svg',
@@ -46,13 +47,13 @@ const Page = async () => {
                         && <ShowMarkdown item={data['Airports 1']}/>}
                 </div>
 
-                <LeafletMap center={center} zoom={13}>
+                {/*<LeafletMap center={center} zoom={13}>*/}
 
-                        {/*{markers.map((position, index) => (*/}
-                        {/*    <Marker key={index} position={position} />*/}
-                        {/*))}*/}
+                {/*        {markers.map((position, index) => (*/}
+                {/*            <Marker key={index} position={position} />*/}
+                {/*        ))}*/}
 
-                </LeafletMap>
+                {/*</LeafletMap>*/}
 
             </div>
         </main>
