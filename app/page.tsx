@@ -3,13 +3,14 @@ import ShowMarkdown from "@/app/components/ShowMarkdown";
 import usePages from "@/app/models/UsePages";
 import {Flex} from "@radix-ui/themes";
 import Image from "next/image";
-
+import {PutLog} from "@/app/models/UseLog";
 export default async function Home() {
 
     //const title = "Jerry's Aviation"
     //const icon = "home"
     const pagePrefix = "home"
     const data = await usePages(pagePrefix);
+    await PutLog({level: "INFO", message: "Home Page Loaded", component: "Home"});
 
     return (
         <main>
