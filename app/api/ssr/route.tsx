@@ -1,16 +1,15 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
 type Data = {
     ip: string,
     userAgent: string
 }
-export async function GET(req: NextApiRequest) {
-    let ip = req.headers['x-real-ip'] as string;
-    let userAgent = req.headers['user-agent'] as string
+export function GET(req: NextRequest, res: NextResponse) {
+    let ip = req.headers.get('x-real-ip') as string;
+    let userAgent = req.headers.get('user-agent') as string
     console.log('ip: ', ip)
 
-    const forwardedFor = req.headers['x-forwarded-for'] as string
+    const forwardedFor = req.headers.get('x-forwarded-for') as string
     // if(!ip && forwardedFor){
     //     ip = forwardedFor?.split(",").at(0) ?? "Unknown";
     // }
