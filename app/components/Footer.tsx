@@ -15,7 +15,8 @@ const Footer = () => {
                 <div className="flex-grow"/>
 
                 <div className="flex flex-col items-center justify-center">Jerry Hobby - Software
-                    Engineer</div>
+                    Engineer
+                </div>
                 <div className="flex-grow"/>
 
                 <div className="flex flex-col items-center justify-center">

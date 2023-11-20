@@ -24,7 +24,7 @@ interface Props {
     continent: string
 }
 
-const ContinentBadge = ({continent}:Props) => {
+const ContinentBadge = ({continent}: Props) => {
     return (
         <span className={'flex-min border border-thick rounded py-0 px-1 mx-1 ' + continentPrefs[continent].color}>
             {continentPrefs[continent].longName}

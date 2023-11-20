@@ -13,7 +13,7 @@ import {
     BiSlider,
     BiSolidPlaneTakeOff
 } from "react-icons/bi";
-import { FaRegClock } from "react-icons/fa6";
+import {FaRegClock} from "react-icons/fa6";
 
 const pageIcons = new Map<string, any>();
 const iconClass = "inline-block align-text-bottom pr-2"
@@ -30,7 +30,6 @@ pageIcons.set("resume", <BiFile className={iconClass}/>);
 pageIcons.set("contact", <BiConversation className={iconClass}/>);
 pageIcons.set("airports", <BiSolidPlaneTakeOff className={iconClass}/>);
 pageIcons.set("timezone", <FaRegClock className={iconClass}/>);
-
 
 
 interface Props {

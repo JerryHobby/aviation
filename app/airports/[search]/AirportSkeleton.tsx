@@ -5,7 +5,6 @@ import {Title} from "@/app/components";
 import ShowMarkdown from "../../components/ShowMarkdown";
 import SearchForm from "@/app/airports/searchForm";
 import usePages from "@/app/models/UsePages";
-import {Flex} from "@radix-ui/themes";
 
 const AirportSkeleton = async () => {
     const title = "Airports"

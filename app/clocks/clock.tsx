@@ -6,7 +6,7 @@ interface Props {
     timezone: string | undefined
 }
 
-const Clock = ({location, timezone}:Props) => {
+const Clock = ({location, timezone}: Props) => {
 
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US',
         {timeZone: timezone}));
@@ -21,7 +21,8 @@ const Clock = ({location, timezone}:Props) => {
     });
 
     return (
-        <div className=' bg-gradient-to-br from-cyan-600 to-blue-800 align-middle py-5 shadow-lg shadow-gray-400 shadow-inner-xl drop-shadow-blue-500 whitespace-nowrap border-1 w-[200px] h-[200px] border border-indigo-700 rounded-full'>
+        <div
+            className=' bg-gradient-to-br from-cyan-600 to-blue-800 align-middle py-5 shadow-lg shadow-gray-400 shadow-inner-xl drop-shadow-blue-500 whitespace-nowrap border-1 w-[200px] h-[200px] border border-indigo-700 rounded-full'>
             <div className='text-center pt-2'>
                 <h1 className='text-3xl text-cyan-300 justify-center'>{location}</h1>
             </div>

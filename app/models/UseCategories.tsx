@@ -2,7 +2,7 @@ import prisma from "@/prisma/client";
 
 const UseCategories = async () => {
 
-    return  prisma.category.findMany(
+    return prisma.category.findMany(
         {
             include: {
                 Article: true

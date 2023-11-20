@@ -173,7 +173,7 @@ async function getTimezoneData(aaa: string, lng?: number, lat?: number, loopInde
 
     const delay = (useAbstract ? 1500 * (loopIndex ? loopIndex : 0)! : 0);
 
-    await new Promise(resolve => setTimeout(resolve, delay ))
+    await new Promise(resolve => setTimeout(resolve, delay))
         .then(async () => {
             try {
                 //console.log(loopIndex, '-> running after ', delay/1000, ' seconds');

@@ -6,15 +6,12 @@ import ShowMarkdown from "@/app/components/ShowMarkdown";
 import 'leaflet/dist/leaflet.css'
 import dynamic from 'next/dynamic'
 
-const LeafletMap = dynamic(() => import('@/app/components/LeafletMap'), { ssr: false })
+const LeafletMap = dynamic(() => import('@/app/components/LeafletMap'), {ssr: false})
 
 // todo - implement regional maps with nearby airports - range 300 miles?
 
 const center: [number, number] = [48.2082, 16.3738]
 const markers: [number, number][] = [center, [48.2, 16.37], [48.1987, 16.3685]]
-
-import { icon } from 'leaflet'
-import {Marker} from "react-leaflet";
 
 // Marker.prototype.options.icon = icon({
 //     iconUrl: '/static/leaflet/map-marker.svg',

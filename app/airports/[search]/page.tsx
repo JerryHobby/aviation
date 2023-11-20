@@ -7,6 +7,7 @@ import {forEach} from "lodash";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import UseTimezones from "@/app/models/useTimezones";
+import {PutLog} from "@/app/models/UseLog";
 
 interface Props {
     params: {
@@ -33,6 +34,7 @@ const Page = async ({params: {search}}: Props) => {
     const icon = "airports"
     const pagePrefix = "AirportSearch";
     const data = await usePages(pagePrefix);
+    await PutLog({level: "INFO", message: "Page Loaded", component: "Airports"});
 
     const find = decodeURIComponent(search);
     var searchParams = [
@@ -48,7 +50,7 @@ const Page = async ({params: {search}}: Props) => {
     ]
 
     // default results - all United hubs
-    if(find.length === 1) {
+    if (find.length === 1) {
         searchParams = [
             {iata_code: {contains: 'DEN'}},
             {iata_code: {contains: 'LAX'}},
@@ -59,7 +61,7 @@ const Page = async ({params: {search}}: Props) => {
             {iata_code: {contains: 'IAD'}},
             {iata_code: {contains: 'GUM'}},
             {iata_code: {contains: 'NRT'}},
-            ]
+        ]
     }
 
     let airports = await prisma.airports.findMany({
@@ -188,7 +190,9 @@ const Page = async ({params: {search}}: Props) => {
                                             return (
                                                 <div key={timezone.aaa}>
                                                     <div>Zone: {timezone.timezone}</div>
-                                                    <div>Time:<span className='font-semibold text-blue-500'> {timezone.current_date} - {timezone.current_time}</span></div>
+                                                    <div>Time:<span
+                                                        className='font-semibold text-blue-500'> {timezone.current_date} - {timezone.current_time}</span>
+                                                    </div>
                                                 </div>
                                             )
                                         }

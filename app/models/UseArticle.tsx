@@ -10,15 +10,15 @@ interface Props {
     id: number
 }
 
-const UseArticle = async ({id}:Props) => {
-        return prisma.article.findUnique({
-            where: {
-                id: id
-            },
-            include: {
-                Category: true
-            }
-        });
+const UseArticle = async ({id}: Props) => {
+    return prisma.article.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            Category: true
+        }
+    });
 };
 
 export default UseArticle;
