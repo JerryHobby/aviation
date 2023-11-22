@@ -2,49 +2,49 @@
 
 cd ~/source/aviation
 
-echo ###############################################
+echo "###############################################"
 git restore package-lock.json
 if [ $? -ne 0 ]; then
           echo $? was returned by: git restore package-lock.json.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 git pull
 if [ $? -ne 0 ]; then
           echo $? was returned by: git pull.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 npm i
 if [ $? -ne 0 ]; then
           echo $? was returned by: npm i.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 npm update
 if [ $? -ne 0 ]; then
           echo $? was returned by: npm update.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 npx prisma generate client
 if [ $? -ne 0 ]; then
           echo $? was returned by: npx prisma generate client.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 npm run build
 if [ $? -ne 0 ]; then
           echo $? was returned by: npm run build.
           exit
 fi
 
-echo ###############################################
+echo "###############################################"
 pm2 restart aviation
 if [ $? -ne 0 ]; then
           echo $? was returned by:pm2 restart aviation.
