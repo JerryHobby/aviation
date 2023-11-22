@@ -10,7 +10,7 @@ export const UseArticles = async () => {
     return prisma.article.findMany(
         {
             include: {
-                Category: true,
+                category: true,
             },
             orderBy: {
                 date: 'desc'

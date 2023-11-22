@@ -5,14 +5,14 @@ const UseActiveCategories = async () => {
     return prisma.category.findMany(
         {
             where: {
-                Article: {
+                article: {
                     some: {
                         categoryId: {gt: 0}
                     }
                 }
             },
             include: {
-                Article: true
+                article: true
             },
             orderBy: {
                 name: 'asc'

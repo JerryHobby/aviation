@@ -16,7 +16,7 @@ const UseArticle = async ({id}: Props) => {
             id: id
         },
         include: {
-            Category: true
+            category: true
         }
     });
 };

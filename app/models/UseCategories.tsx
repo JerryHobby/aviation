@@ -5,7 +5,7 @@ const UseCategories = async () => {
     return prisma.category.findMany(
         {
             include: {
-                Article: true
+                article: true
             },
             orderBy: {
                 name: 'asc'

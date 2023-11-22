@@ -45,8 +45,8 @@ const Page = async ({params: {search}}: Props) => {
         {iso_country: {contains: find}},
         {ident: {contains: find}},
         {keywords: {contains: find}},
-        {Regions: {name: {contains: find}}},
-        {Countries: {name: {contains: find}}},
+        {regions: {name: {contains: find}}},
+        {countries: {name: {contains: find}}},
     ]
 
     // default results - all United hubs
@@ -66,8 +66,8 @@ const Page = async ({params: {search}}: Props) => {
 
     let airports = await prisma.airports.findMany({
         include: {
-            Regions: {select: {name: true}},
-            Countries: {select: {name: true}},
+            regions: {select: {name: true}},
+            countries: {select: {name: true}},
         },
         where: {
             type: {
@@ -182,8 +182,8 @@ const Page = async ({params: {search}}: Props) => {
                             </Table.Cell>
                             <Table.Cell>
                                 <div className='font-semibold'>{airport.municipality
-                                    + ", " + airport.Regions?.name
-                                    + ", " + airport.Countries.name}
+                                    + ", " + airport.regions?.name
+                                    + ", " + airport.countries.name}
                                 </div>
                                 {timezones && timezones.map((timezone) => {
                                         if (timezone.aaa === airport.iata_code) {
