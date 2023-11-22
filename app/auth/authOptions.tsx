@@ -78,6 +78,6 @@ const nextAuthOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-    debug: true,
+    debug: false,
 }
 export default nextAuthOptions;
