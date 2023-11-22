@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google';
 import {Container, Theme} from '@radix-ui/themes';
+import AuthProvider from "@/app/auth/AuthProvider";
 import './globals.css'
 import '@radix-ui/themes/styles.css';
 import './theme-config.css'
@@ -34,6 +35,7 @@ export default function RootLayout({children,}: {
         </head>
 
         <body className={inter.className} suppressHydrationWarning={true}>
+        <AuthProvider>
         <Theme>
             <header className="sticky top-0 z-50"><NavBar/></header>
             <Container className='content-center'>
@@ -41,7 +43,9 @@ export default function RootLayout({children,}: {
             </Container>
             <Footer/>
         </Theme>
+        </AuthProvider>
         </body>
         </html>
     )
 }
+
