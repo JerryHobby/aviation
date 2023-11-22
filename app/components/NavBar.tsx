@@ -2,6 +2,13 @@
 import React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import classNames from 'classnames';
+import {Session} from "next-auth";
+import {CaretDownIcon} from '@radix-ui/react-icons';
+import {useSession} from "next-auth/react";
+
+const dropTriggerClassName = "text-violet11 hover:bg-violet3 focus:shadow-violet7 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]";
+const caretClassName = "text-violet10 relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180";
+
 
 const basicNavItem = (title: string, href: string) => {
     const linkClassName = "text-violet11 hover:underline focus:shadow-violet7 block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]";
@@ -15,8 +22,41 @@ const basicNavItem = (title: string, href: string) => {
         </NavigationMenu.Item>)
 }
 
+const adminMenu = (session: Session | null) => {
+    if (!session) return null;
+    const admin = session.user?.email === "jerry@anythinginternet.com";
+    if (!admin) return null;
+
+    return (
+        <>
+            {basicNavItem("Post New Article", "/articles/new")}
+            {basicNavItem("Post New Project", "/projects/new")}
+        </>
+    );
+}
+
+const userMenu = (status: string, session: Session) => {
+    return (
+        <div className="dropdown dropdown-hover">
+            <label tabIndex={0} className={dropTriggerClassName}>
+                {!session && "User Menu"}
+                {(session && session.user?.name)}
+                <CaretDownIcon className={caretClassName} aria-hidden/>
+            </label>
+
+            <ul tabIndex={0}
+                className="border dropdown-content z-[1] menu py-0 px-2 shadow bg-gray-50 rounded-box w-52">
+                {adminMenu(session)}
+                {(!session || null)
+                    && (basicNavItem("Sign In", "/api/auth/signin"))
+                    || (basicNavItem("Sign Out", "/api/auth/signout"))}
+            </ul>
+        </div>
+    );
+}
 const NavBar = () => {
     const navBarClassName = "center m-0 flex list-none rounded-[6px] bg-gray-50 p-1 shadow-gray-500 shadow-[0_1px_3px]"
+    const {status, data: session} = useSession();
 
     return (
         <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
@@ -30,6 +70,7 @@ const NavBar = () => {
 
                 {basicNavItem("US Hubs", "/hubs")}
                 {basicNavItem("Contact", "/contact")}
+                {userMenu(status, session!)}
 
 
                 <NavigationMenu.Indicator
