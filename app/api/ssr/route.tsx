@@ -18,7 +18,7 @@ function getUserData(req: NextRequest) {
 }
 
 async function logEntry(data: any) {
-    prisma.log.create({
+    await prisma.log.create({
         data: {
             ip: data.ip,
             userAgent: data.userAgent,

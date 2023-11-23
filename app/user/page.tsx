@@ -22,6 +22,11 @@ const Page = () => {
         if (!result) return;
     }, []);
 
+    React.useEffect(() => {
+        const result = Axios.post('/api/ssr',
+            {level: 'info', message: 'message', component: 'component'});
+    }, [data]);
+
     return (
         <main>
             <div>
