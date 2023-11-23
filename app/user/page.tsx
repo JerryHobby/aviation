@@ -7,7 +7,7 @@ interface Data {
     userAgent: string,
 }
 
-const Page = () => {
+const User = () => {
     const [data, setData] = React.useState<Data>({
         ip: 'loading...',
         userAgent: 'loading...',
@@ -28,12 +28,14 @@ const Page = () => {
     }, [data]);
 
     return (
-        <main>
-            <div>
-                ip: {data?.ip}<br/>
-                agent: {data?.userAgent}<br/>
-            </div>
-        </main>
+        //<div className='font-xs'>{data?.ip} - {data.userAgent}</div>
+        <></>
+        // <main>
+        //     <div>
+        //         ip: {data?.ip}<br/>
+        //         agent: {data?.userAgent}<br/>
+        //     </div>
+        // </main>
     );
 };
 
@@ -65,5 +67,5 @@ const Page = () => {
 //     }
 // }
 
-export default Page;
+export default User;
 

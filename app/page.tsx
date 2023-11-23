@@ -4,6 +4,7 @@ import usePages from "@/app/models/UsePages";
 import {Flex} from "@radix-ui/themes";
 import Image from "next/image";
 import {PutLog} from "@/app/models/UseLog";
+import User from "@/app/user/page";
 
 export default async function Home() {
 
@@ -26,6 +27,8 @@ export default async function Home() {
                     alt="Jerry Hobby flying a plane" width={300} height={20}
                     className="align-top object-contain h-50 w-300 border mx-16 p-3 rounded-box "/>
             </Flex>
+
+            <User />
         </main>
     )
 }
