@@ -1,4 +1,4 @@
-import {Title} from "@/app/components";
+import {Log, Title} from "@/app/components";
 import UseTimezones from "@/app/models/useTimezones";
 import React from "react";
 import {Flex} from "@radix-ui/themes";
@@ -34,6 +34,10 @@ const Page = async () => {
                     })}
                 </Flex>
             }
+            <Log
+                component='Clocks'
+                level='INFO'
+                message='Page Loaded'/>
         </main>
     );
 };

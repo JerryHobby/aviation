@@ -3,8 +3,7 @@ import ShowMarkdown from "@/app/components/ShowMarkdown";
 import usePages from "@/app/models/UsePages";
 import {Flex} from "@radix-ui/themes";
 import Image from "next/image";
-import {PutLog} from "@/app/models/UseLog";
-import User from "@/app/user/page";
+import Log from "@/app/components/Log";
 
 export default async function Home() {
 
@@ -12,7 +11,6 @@ export default async function Home() {
     //const icon = "home"
     const pagePrefix = "home"
     const data = await usePages(pagePrefix);
-    await PutLog({level: "INFO", message: "Page Loaded", component: "Home"});
     return (
         <main>
             <Image className='rounded-lg w-full object-contain mb-20 shadow-xl' src='/images/globebanner.png'
@@ -28,7 +26,10 @@ export default async function Home() {
                     className="align-top object-contain h-50 w-300 border mx-16 p-3 rounded-box "/>
             </Flex>
 
-            <User />
+            <Log
+                component='Home'
+                level='INFO'
+                message='Page Loaded'/>
         </main>
     )
 }

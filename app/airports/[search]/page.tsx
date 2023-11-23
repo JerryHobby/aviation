@@ -1,13 +1,12 @@
 import React from 'react';
 import prisma from "@/prisma/client";
 import {Table} from "@radix-ui/themes";
-import {Title} from "@/app/components";
+import {Log, Title} from "@/app/components";
 import SearchForm from "@/app/airports/searchForm";
 import {forEach} from "lodash";
 import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import UseTimezones from "@/app/models/useTimezones";
-import {PutLog} from "@/app/models/UseLog";
 
 interface Props {
     params: {
@@ -34,7 +33,6 @@ const Page = async ({params: {search}}: Props) => {
     const icon = "airports"
     const pagePrefix = "AirportSearch";
     const data = await usePages(pagePrefix);
-    await PutLog({level: "INFO", message: "Page Loaded", component: "Airports"});
 
     const find = decodeURIComponent(search);
     var searchParams = [
@@ -198,13 +196,16 @@ const Page = async ({params: {search}}: Props) => {
                                         }
                                     }
                                 )}
-
-
                             </Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>
             </Table.Root>
+            <Log
+                component='Airports'
+                level='INFO'
+                message={'Page Loaded. Props: ' + decodeURI(search) }/>
+
         </main>
     );
 };

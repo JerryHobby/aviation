@@ -1,18 +1,15 @@
 import React from 'react';
-import {ShowMarkdown, Title} from "@/app/components";
+import {Log, ShowMarkdown, Title} from "@/app/components";
 import usePages from "@/app/models/UsePages";
 import prisma from "@/prisma/client";
 import {Table} from '@radix-ui/themes';
 import Image from "next/image";
-import {PutLog} from "@/app/models/UseLog";
 
 const Page = async () => {
     const title = "Major Global Airlines"
     const icon = "airports"
     const pagePrefix = "airlines";
     const data = await usePages(pagePrefix);
-    await PutLog({level: "INFO", message: "Page Loaded", component: "Airlines"});
-
 
     const airlines = await prisma.airlines.findMany({
         orderBy: [
@@ -78,7 +75,12 @@ const Page = async () => {
                     </Table.Row>
                 ))}
             </Table.Root>
+            <Log
+                component='Airlines'
+                level='INFO'
+                message='Page Loaded'/>
         </main>
+
     );
 };
 

@@ -5,14 +5,13 @@ import usePages from "@/app/models/UsePages";
 import ShowMarkdown from "@/app/components/ShowMarkdown";
 import {Page} from ".prisma/client";
 import FlexibleFrame from "@/app/components/FlexibleFrame";
-import {PutLog} from "@/app/models/UseLog";
+import {Log} from "@/app/components";
 
 const Contact = async () => {
 
     const title = "Contact Jerry"
     const icon = "contact"
     const pagePrefix = "contact"
-    await PutLog({level: "INFO", message: "Page Loaded", component: "Contact"});
 
     const data = await usePages(pagePrefix);
 
@@ -35,6 +34,10 @@ const Contact = async () => {
                     {data && getCard(data['Contact 1'])}
                 </FlexibleFrame>
             </div>
+            <Log
+                component='Contact'
+                level='INFO'
+                message='Page Loaded'/>
         </main>
     )
 };

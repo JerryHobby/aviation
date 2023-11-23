@@ -7,3 +7,4 @@ export {default as Footer} from "./Footer";
 export {default as NavBar} from "./NavBar";
 export {default as ContinentBadge} from "./ContinentBadge";
 export {default as ShowMarkdown} from "./ShowMarkdown";
+export {default as Log} from "./Log";

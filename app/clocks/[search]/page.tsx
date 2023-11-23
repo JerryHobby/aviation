@@ -1,10 +1,9 @@
-import {Title} from "@/app/components";
+import {Log, Title} from "@/app/components";
 import UseTimezones from "@/app/models/useTimezones";
 import React from "react";
 import {Flex} from "@radix-ui/themes";
 import Clock from "@/app/clocks/clock";
 import SearchForm from "@/app/clocks/searchForm";
-import {PutLog} from "@/app/models/UseLog";
 
 interface Props {
     params: {
@@ -16,8 +15,6 @@ const Page = async ({params: {search}}: Props) => {
 
     const title = "World Clocks";
     const icon = "timezone";
-
-    await PutLog({level: "INFO", message: "Page Loaded", component: "Clocks"});
 
     var find = decodeURIComponent(search);
     // todo - add search form to search for timezones
@@ -53,6 +50,10 @@ const Page = async ({params: {search}}: Props) => {
                     })}
                 </Flex>
             }
+            <Log
+                component='Clocks'
+                level='INFO'
+                message={'Page Loaded. Props: ' + decodeURI(search) }/>
         </main>
     );
 };
