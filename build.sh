@@ -7,7 +7,7 @@ echo git restore package-lock.json
 
 git restore package-lock.json
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -16,7 +16,7 @@ echo git pull
 
 git pull
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -25,7 +25,7 @@ echo npm i
 
 npm i
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -34,7 +34,7 @@ echo npm update
 
 npm update
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -43,7 +43,7 @@ echo npx prisma generate client
 
 npx prisma generate client
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -52,7 +52,7 @@ echo npm run build
 
 npm run build
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi
 
@@ -61,6 +61,6 @@ echo pm2 restart aviation
 
 pm2 restart aviation
 if [ $? -ne 0 ]; then
-          echo $? was returned.
+          echo '\n' $? was returned.
           exit
 fi

@@ -23,8 +23,9 @@ const User = () => {
     }, []);
 
     React.useEffect(() => {
-        const result = Axios.post('/api/ssr',
-            {level: 'info', message: 'message', component: 'component'});
+        data.ip !== 'loading...'
+        && Axios.post('/api/ssr',
+            {level: 'INFO', message: 'page loaded', component: 'Home'});
     }, [data]);
 
     return (
