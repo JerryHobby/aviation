@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
     matcher: [
-        '/admin/:path*',
-        '/users/:id?'
+        '/xxx/:path*',
+        '/xxx/:id?'
     ]
 }
