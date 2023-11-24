@@ -3,8 +3,8 @@ import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth/next"
 import nextAuthOptions from "@/app/auth/authOptions";
 //import {Session} from "next-auth";
-import {groupBy, orderBy} from "lodash";
-import {Title} from "@/app/components";
+//import {groupBy, orderBy} from "lodash";
+import {Log, Title} from "@/app/components";
 import {redirect} from "next/navigation";
 
 const Page = async () => {
@@ -12,10 +12,11 @@ const Page = async () => {
     // const {status, data: session} = useSession(); // client side
     const session = await getServerSession(nextAuthOptions) // server side
     var admin = false
+    var email = ""
 
     if (!session || !session.user?.email) redirect('/api/auth/signin')
     else {
-        console.log(session.user?.email)
+        email = session.user?.email
         admin = [
             "jerry@anythinginternet.com",
             "jerryhobby@gmail.com",
@@ -67,7 +68,10 @@ const Page = async () => {
                 ))}
                 </tbody>
             </table>
-
+            <Log
+                component={title}
+                level='INFO'
+                message={'Page Loaded for: ' + email  }/>
         </main>
     );
 };

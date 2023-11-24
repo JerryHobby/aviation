@@ -202,7 +202,7 @@ const Page = async ({params: {search}}: Props) => {
                 </Table.Body>
             </Table.Root>
             <Log
-                component='Airports'
+                component={title}
                 level='INFO'
                 message={'Page Loaded. Props: ' + decodeURI(search) }/>
 

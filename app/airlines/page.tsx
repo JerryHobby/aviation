@@ -76,7 +76,7 @@ const Page = async () => {
                 ))}
             </Table.Root>
             <Log
-                component='Airlines'
+                component={title}
                 level='INFO'
                 message='Page Loaded'/>
         </main>

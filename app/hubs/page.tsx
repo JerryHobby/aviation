@@ -17,7 +17,7 @@ const Page = async () => {
                     && <ShowMarkdown item={data['Hubs 1']}/>}
             </div>
             <Log
-                component='Hubs'
+                component={title}
                 level='INFO'
                 message='Page Loaded'/>
         </main>

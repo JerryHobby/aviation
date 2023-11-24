@@ -51,7 +51,7 @@ const Page = async ({params: {search}}: Props) => {
                 </Flex>
             }
             <Log
-                component='Clocks'
+                component={title}
                 level='INFO'
                 message={'Page Loaded. Props: ' + decodeURI(search) }/>
         </main>

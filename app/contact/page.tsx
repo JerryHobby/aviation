@@ -35,7 +35,7 @@ const Contact = async () => {
                 </FlexibleFrame>
             </div>
             <Log
-                component='Contact'
+                component={title}
                 level='INFO'
                 message='Page Loaded'/>
         </main>

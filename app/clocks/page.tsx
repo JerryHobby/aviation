@@ -9,7 +9,7 @@ const Page = async () => {
 
     const title = "Timezone Finder";
     const icon = "timezone";
-    const pagePrefix = "timezone";
+    //const pagePrefix = "timezone";
 
     // todo - add search form to search for timezones
     // collect a list of aaa to build the timezone list
@@ -35,7 +35,7 @@ const Page = async () => {
                 </Flex>
             }
             <Log
-                component='Clocks'
+                component={title}
                 level='INFO'
                 message='Page Loaded'/>
         </main>

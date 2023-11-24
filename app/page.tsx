@@ -7,7 +7,7 @@ import Log from "@/app/components/Log";
 
 export default async function Home() {
 
-    //const title = "Jerry's Aviation"
+    const title = "Home"
     //const icon = "home"
     const pagePrefix = "home"
     const data = await usePages(pagePrefix);
@@ -27,7 +27,7 @@ export default async function Home() {
             </Flex>
 
             <Log
-                component='Home'
+                component={title}
                 level='INFO'
                 message='Page Loaded'/>
         </main>
