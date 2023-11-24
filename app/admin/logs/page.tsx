@@ -11,8 +11,8 @@ const Page = async () => {
 
     // const {status, data: session} = useSession(); // client side
     const session = await getServerSession(nextAuthOptions) // server side
-    var admin = false
-    var email = ""
+    let admin = false
+    let email = ""
 
     if (!session || !session.user?.email) redirect('/api/auth/signin')
     else {
