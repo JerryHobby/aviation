@@ -29,8 +29,7 @@ const adminMenu = (session: Session | null) => {
 
     return (
         <>
-            {basicNavItem("Post New Article", "/articles/new")}
-            {basicNavItem("Post New Project", "/projects/new")}
+            {basicNavItem("Log Files", "/admin/logs")}
         </>
     );
 }
